@@ -8,10 +8,11 @@
  * Controller of the taskTrackerFrontEndApp
  */
 angular.module('taskTrackerFrontEndApp')
-  .controller('AboutCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('NewTaskCtrl', function ($scope) {
+
+    $scope.printHello = function(){
+      console.log("I think this will print hello");
+    };
+
+
   });
