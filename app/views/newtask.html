@@ -1,33 +1,33 @@
 <h2 class="ui header">Add a New User Task</h2>
 <form class="ui form">
-  <div class="field">
+  <div class="field name">
     <label>Task Name</label>
-    <input type="text" name="task-name" placeholder="Task Name">
+    <input type="text" ng-model="formData.Name" placeholder="Task Name">
   </div>
-  <div class="field">
+  <div class="field description">
     <label>Task Description</label>
-    <input type="text" name="task-description" placeholder="Task Description">
+    <input type="text" ng-model="formData.Description" placeholder="Task Description">
   </div>
   <div class="inline fields">
       <label>Task Status</label>
       <div class="field">
         <div class="ui radio checkbox">
-          <input type="radio" name="frequency">
+          <input type="radio" name="frequency" value=0>
           <label>To Do</label>
         </div>
       </div>
       <div class="field">
         <div class="ui radio checkbox">
-          <input type="radio" name="frequency">
+          <input type="radio" name="frequency" value=1>
           <label>In Progress</label>
         </div>
       </div>
       <div class="field">
         <div class="ui radio checkbox">
-          <input type="radio" name="frequency">
+          <input type="radio" name="frequency" value=2>
           <label>Completed</label>
         </div>
       </div>
   </div>
-  <div class="ui button" ng-click="printHello()">Add New Task</button>
+  <div class="ui button" ng-click="getFormData()">Add New Task</button>
 </form>
