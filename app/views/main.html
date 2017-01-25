@@ -7,6 +7,7 @@
       <th class="five wide column">Description</th>
       <th class="two wide column">Status</th>
       <th class="">Completed On</th>
+      <th class="one wide column">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -16,6 +17,10 @@
       <td>{{task.description}}</td>
       <td>{{convertTaskStatus(task.taskStatus)}}</td>
       <td><span ng-if="task.taskStatus === 2">{{task.completedOn}}</span></td>
+      <td>
+        <i class="remove outline icon" ng-click="deleteItem(task);"></i>
+        <i class="write outline icon" ng-click="editItem(task);"></i>
+      </td>
     </tr>
   </tbody>
 </table>

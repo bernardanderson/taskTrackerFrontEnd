@@ -29,4 +29,13 @@ angular.module('taskTrackerFrontEndApp')
       $http.get('http://localhost:5000/userTasks')
       .then(data => $scope.taskData = data.data);
     });
+
+    $scope.deleteItem = function(sentTask){
+      $http.delete(`http://localhost:5000/userTasks/${sentTask.taskId}`).then(
+        function(){
+          $scope.taskData.splice($scope.taskData.indexOf(sentTask), 1);
+        }
+      )
+    }
+
   });
