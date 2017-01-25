@@ -8,5 +8,25 @@
  * Controller of the taskTrackerFrontEndApp
  */
 angular.module('taskTrackerFrontEndApp')
-  .controller('MainCtrl', function () {
+  .controller('MainCtrl', function ($scope, $http) {
+    
+    $scope.taskData = [];
+
+    $scope.convertTaskStatus = function(sentTaskStatusInt) {
+      switch (sentTaskStatusInt) {
+        case 0:
+          return "To Do";
+        case 1:
+          return "In Progress";
+        case 2:
+          return "Completed";
+        default:
+          return "N/A";
+      }
+    }
+
+    angular.element(document).ready(function () {
+      $http.get('http://localhost:5000/userTasks')
+      .then(data => $scope.taskData = data.data);
+    });
   });

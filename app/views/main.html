@@ -1,17 +1,21 @@
-<div class="ui card">
-  <div class="content">
-    <a class="header">Kristy</a>
-    <div class="meta">
-      <span class="date">Joined in 2013</span>
-    </div>
-    <div class="description">
-      Kristy is an art director living in New York.
-    </div>
-  </div>
-  <div class="extra content">
-    <a>
-      <i class="user icon"></i>
-      22 Friends
-    </a>
-  </div>
-</div>
+<h2 class="ui header">Your Current Task List</h2>
+<table class="ui celled table">
+  <thead>
+    <tr class="center aligned">
+      <th class="one wide column">Task #</th>
+      <th class="three wide column">Name</th>
+      <th class="five wide column">Description</th>
+      <th class="two wide column">Status</th>
+      <th class="">Completed On</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="task in taskData">
+      <td>{{task.taskId}}</td>
+      <td>{{task.name}}</td>
+      <td>{{task.description}}</td>
+      <td>{{convertTaskStatus(task.taskStatus)}}</td>
+      <td><span ng-if="task.taskStatus === 2">{{task.completedOn}}</span></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,16 +1,33 @@
-<div class="ui grid">
-  <div class="eight wide column centered">
-    <h2 class="ui header">Add a New User Task</h2>
-    <form class="ui form">
-      <div class="field">
-        <label>Task Name</label>
-        <input type="text" name="task-name" placeholder="Task Name">
-      </div>
-      <div class="field">
-        <label>Task Description</label>
-        <input type="text" name="task-description" placeholder="Task Description">
-      </div>
-      <div class="ui button" ng-click="printHello()">Submit</button>
-    </form>
+<h2 class="ui header">Add a New User Task</h2>
+<form class="ui form">
+  <div class="field">
+    <label>Task Name</label>
+    <input type="text" name="task-name" placeholder="Task Name">
   </div>
-</div>
+  <div class="field">
+    <label>Task Description</label>
+    <input type="text" name="task-description" placeholder="Task Description">
+  </div>
+  <div class="inline fields">
+      <label>Task Status</label>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="frequency">
+          <label>To Do</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="frequency">
+          <label>In Progress</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="frequency">
+          <label>Completed</label>
+        </div>
+      </div>
+  </div>
+  <div class="ui button" ng-click="printHello()">Add New Task</button>
+</form>

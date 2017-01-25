@@ -18,8 +18,12 @@
   <body ng-app="taskTrackerFrontEndApp">
 
     <ng-include src="'views/navbar.html'"></ng-include>
-    <div ng-view=""></div>
 
+    <div class="ui three column grid">
+      <div class="one wide column"></div>
+      <div class="fourteen wide column ngviewspace" ng-view=""></div>
+      <div class="one wide column"></div>
+    </div>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
