@@ -1,26 +1,53 @@
 <h2 class="ui header">Your Current Task List</h2>
-<table class="ui celled table">
-  <thead>
-    <tr class="center aligned">
-      <th class="one wide column">Task #</th>
-      <th class="three wide column">Name</th>
-      <th class="five wide column">Description</th>
-      <th class="two wide column">Status</th>
-      <th class="">Completed On</th>
-      <th class="one wide column">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="task in taskData">
-      <td>{{task.taskId}}</td>
-      <td>{{task.name}}</td>
-      <td>{{task.description}}</td>
-      <td>{{convertTaskStatus(task.taskStatus)}}</td>
-      <td><span ng-if="task.taskStatus === 2">{{task.completedOn}}</span></td>
-      <td>
-        <i class="remove outline icon" ng-click="deleteItem(task);"></i>
-        <i class="write outline icon" ng-click="editItem(task);"></i>
-      </td>
-    </tr>
-  </tbody>
-</table>
+
+  <table class="ui celled table">
+    <thead>
+      <tr class="center aligned" ng-if="taskData.length === 0">
+        <th>Your task list is empty! Add a task!</th>
+      </tr>
+
+      <tr class="center aligned" ng-if="taskData.length > 0">
+        <th class="one wide column">TaskId</th>
+        <th class="three wide column">Name</th>
+        <th class="five wide column">Description</th>
+        <th class="two wide column">Status</th>
+        <th class="">Completed On</th>
+        <th class="one wide column">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="task in taskData">
+        <td>{{task.taskId}}</td>
+        <td class="task_{{task.taskId}} name">{{task.name}}</td>
+        <td class="task_{{task.taskId}} desc">{{task.description}}</td>
+        <td>
+          <span class="task_{{task.taskId}} dropd">
+            {{convertTaskStatus(task.taskStatus)}}
+          </span>
+          <div class="ui inline dropdown" ng-show="editingMode.enabled && editingMode.task === {{task.taskId}}">
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="header">New Status</div>
+              <div class="item" data-text="0">To Do</div>
+              <div class="item" data-text="1">In Progress</div>
+              <div class="item" data-text="2">Completed</div>
+            </div>
+          </div>
+        </td>
+        <td><span ng-if="task.taskStatus === 2">{{task.completedOn}}</span></td>
+        <td class="center aligned">
+          <span ng-show="editingMode.enabled && editingMode.task === {{task.taskId}}">
+            <i class="save outline icon" ng-click="editItem(task);"></i>
+          </span>
+          <span ng-hide="editingMode.enabled">
+            <i class="write outline icon" ng-click="editItem(task);"></i>
+            <i class="remove outline icon" ng-click="deleteItem(task);"></i>
+          </span>
+          <span ng-show="editingMode.enabled && editingMode.task !== {{task.taskId}}">
+            <i class="disabled write outline icon"></i>
+            <i class="disabled remove outline icon"></i>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
