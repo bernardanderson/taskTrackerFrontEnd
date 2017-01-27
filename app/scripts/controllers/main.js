@@ -12,7 +12,10 @@ angular.module('taskTrackerFrontEndApp')
     
     $scope.taskData = [];
 
-    $scope.editedTask = {}
+    $scope.taskSearchFilter = {
+      searchString: "",
+      filterSelection: "name"
+    }
 
     $scope.editingMode = {
       enabled: false,      
@@ -33,9 +36,29 @@ angular.module('taskTrackerFrontEndApp')
       }
     }
 
+    $scope.filterTasks = function(sentUserInput) {
+      return function(sentTask) { 
+        switch ($scope.taskSearchFilter.filterSelection) {
+          case "name":
+            return sentTask.name.toLowerCase().match(sentUserInput.toLowerCase());
+          case "description":
+            return sentTask.description.toLowerCase().match(sentUserInput.toLowerCase());
+          case "status":
+            return $scope.convertTaskStatus(sentTask.taskStatus).toLowerCase().match(sentUserInput.toLowerCase());  
+          case "completeddate":
+            if (sentUserInput !== "" && sentTask.taskStatus !== 2) {
+              return false;
+            }
+            return sentTask.completedOn.toLowerCase().match(sentUserInput.toLowerCase());  
+          default:
+            return true; 
+        }
+      }
+    };
+
     $scope.fireDropDown = function(sentTask) {
       if ($scope.editingMode.hasFiredOnce){
-        angular.element('.ui.dropdown').dropdown({
+        angular.element('.ui.inline.dropdown').dropdown({
           onChange: function(value, text, $selectedItem) {
             for (let i = 0; i < $scope.taskData.length; i++) {
               if ($scope.taskData[i].taskId === sentTask.taskId) {
@@ -58,6 +81,8 @@ angular.module('taskTrackerFrontEndApp')
         $scope.fireDropDown(sentTask);
         angular.element(`.task_${sentTask.taskId}`).attr("contenteditable", "true");
         angular.element(`.task_${sentTask.taskId}`).addClass("warning");
+        angular.element(`.searcher.dropdown`).addClass("disabled");
+        angular.element(`input.searcher`).attr("disabled", "true");
       } else {
         let name = angular.element(`.task_${sentTask.taskId}.name`);
         let desc = angular.element(`.task_${sentTask.taskId}.desc`);
@@ -82,6 +107,8 @@ angular.module('taskTrackerFrontEndApp')
           $scope.editingMode.task = null;
           angular.element(`.task_${sentTask.taskId}`).removeAttr("contenteditable");
           angular.element(`.task_${sentTask.taskId}`).removeClass("warning");
+          angular.element(`.searcher.dropdown`).removeClass("disabled");
+          angular.element(`input.searcher`).removeAttr("disabled");
           $scope.editTask(sentTask);
         }
       }
@@ -109,7 +136,13 @@ angular.module('taskTrackerFrontEndApp')
 
     angular.element(document).ready(function () {
       $http.get('http://localhost:5000/userTasks')
-      .then(data => $scope.taskData = data.data);
+      .then( data => $scope.taskData = data.data );
+        
+      angular.element('.searcher.dropdown').dropdown({
+        onChange: function(value, text, $selectedItem) {
+          $scope.taskSearchFilter.filterSelection = value;
+        }
+      });
     });
 
     $scope.deleteItem = function(sentTask){

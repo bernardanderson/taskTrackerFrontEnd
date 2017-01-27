@@ -41,7 +41,6 @@ angular.module('taskTrackerFrontEndApp')
         headers: { 'Content-Type': 'application/json' },
         data: angular.toJson($scope.formData)
         })
-        .then(data => console.log(data));
     };
 
     angular.element(document).ready(function () {

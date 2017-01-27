@@ -1,9 +1,33 @@
-<h2 class="ui header">Your Current Task List</h2>
-
   <table class="ui celled table">
     <thead>
+      <tr>
+        <th colspan=3>
+          <span class="ui header">Your Current Task List</span>
+        </th>
+        <th colspan=3>
+          <div class="ui fluid action input">
+            <input class="searcher" type="text" placeholder="Filter By..." tabindex="0" ng-model="taskSearchFilter.searchString">
+            <div class="ui searcher dropdown selection" tabindex="1">
+              <select>
+                <option value="name">Name</option>
+                <option value="descrip">Description</option>
+                <option value="status">Status</option>
+                <option value="compdate">Completed Date</option>
+              </select>
+              <i class="dropdown icon"></i>
+              <div class="text">Name</div>
+              <div class="menu" tabindex="-1">
+                <div class="item active selected" data-value="name">Name</div>
+                <div class="item" data-value="description">Description</div>
+                <div class="item" data-value="status">Status</div>
+                <div class="item" data-value="completeddate">Completed Date</div>
+              </div>
+            </div>
+          </div>
+        </th>
+      </tr>
       <tr class="center aligned" ng-if="taskData.length === 0">
-        <th>Your task list is empty! Add a task!</th>
+        <th colspan=6>Your task list is empty! Add a task!</th>
       </tr>
 
       <tr class="center aligned" ng-if="taskData.length > 0">
@@ -16,7 +40,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="task in taskData">
+      <tr ng-repeat="task in taskData | filter: filterTasks(taskSearchFilter.searchString)">
         <td>{{task.taskId}}</td>
         <td class="task_{{task.taskId}} name">{{task.name}}</td>
         <td class="task_{{task.taskId}} desc">{{task.description}}</td>
@@ -34,7 +58,7 @@
             </div>
           </div>
         </td>
-        <td><span ng-if="task.taskStatus === 2">{{task.completedOn}}</span></td>
+        <td><span ng-show="task.taskStatus === 2">{{task.completedOn}}</span></td>
         <td class="center aligned">
           <span ng-show="editingMode.enabled && editingMode.task === {{task.taskId}}">
             <i class="save outline icon" ng-click="editItem(task);"></i>
